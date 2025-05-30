@@ -2,11 +2,13 @@
 
 #include <QApplication>
 
+// NOLINTBEGIN(readability-static-accessed-through-instance)
 int main(int argc, char *argv[])
 {
-    QApplication app(argc, argv);
+    const QApplication app(argc, argv);
 
-    MainWindow wnd;
+    const MainWindow wnd;
 
     return app.exec();
 }
+// NOLINTEND(readability-static-accessed-through-instance)

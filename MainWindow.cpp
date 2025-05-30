@@ -16,3 +16,9 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+
+void MainWindow::on_action_eXit_triggered()
+{
+    close();
+}
+
