@@ -18,6 +18,9 @@ qt_add_executable(File-Manager
     MainWindow.hpp
     mainwindow.ui
     .clang-format .clang-tidy CompileOptions.cmake
+    TabWidgetManager.hpp TabWidgetManager.cpp
+    Tab.hpp Tab.cpp
+    TableViewManager.hpp TableViewManager.cpp
 )
 
 include(CompileOptions.cmake)

@@ -35,9 +35,8 @@ if (CMAKE_CXX_COMPILER_ID MATCHES "GNU")
 
 
         ## Preprocessor definitions
-        -DFAT_BUILDING_WITH_MSVC=0
-        $<$<STREQUAL:${CMAKE_HOST_SYSTEM_NAME},Linux>:   -DFAT_BUILDING_ON_WINDOWS=0>
-        $<$<STREQUAL:${CMAKE_HOST_SYSTEM_NAME},Windows>: -DFAT_BUILDING_ON_WINDOWS=1>
+        $<$<STREQUAL:${CMAKE_HOST_SYSTEM_NAME},Linux>:   -DFATLIB_BUILDING_ON_WINDOWS=0>
+        $<$<STREQUAL:${CMAKE_HOST_SYSTEM_NAME},Windows>: -DFATLIB_BUILDING_ON_WINDOWS=1>
 
 
         ## Configuration-specific
@@ -47,12 +46,10 @@ if (CMAKE_CXX_COMPILER_ID MATCHES "GNU")
             -Werror
         >
         $<$<CONFIG:Release>:
-            -O2
+            -O3
+
+            -march=native
         >
-
-
-        ## Standard library
-        $<$<STREQUAL:${CMAKE_HOST_SYSTEM_NAME},Linux>: -stdlib=libstdc++>
     )
 
 elseif (CMAKE_CXX_COMPILER_ID MATCHES "Clang")
@@ -77,12 +74,12 @@ elseif (CMAKE_CXX_COMPILER_ID MATCHES "Clang")
         -Wno-padded
         -Wno-unused-function
         -Wno-unused-template
+        -Wno-documentation
 
 
         ## Preprocessor definitions
-        -DFAT_BUILDING_WITH_MSVC=0
-        $<$<STREQUAL:${CMAKE_HOST_SYSTEM_NAME},Linux>:   -DFAT_BUILDING_ON_WINDOWS=0>
-        $<$<STREQUAL:${CMAKE_HOST_SYSTEM_NAME},Windows>: -DFAT_BUILDING_ON_WINDOWS=1>
+        $<$<STREQUAL:${CMAKE_HOST_SYSTEM_NAME},Linux>:   -DFATLIB_BUILDING_ON_WINDOWS=0>
+        $<$<STREQUAL:${CMAKE_HOST_SYSTEM_NAME},Windows>: -DFATLIB_BUILDING_ON_WINDOWS=1>
 
 
         ## Configuration-specific
@@ -92,12 +89,21 @@ elseif (CMAKE_CXX_COMPILER_ID MATCHES "Clang")
             -Werror
         >
         $<$<CONFIG:Release>:
-            -O2
+            -O3
+
+            -march=native
         >
 
 
         ## Standard library
         $<$<STREQUAL:${CMAKE_HOST_SYSTEM_NAME},Linux>: -stdlib=libc++>
+    )
+
+    target_link_options(CompileOptions INTERFACE
+        ##################################
+
+        ## Standard library
+        $<$<STREQUAL:${CMAKE_HOST_SYSTEM_NAME},Linux>: -lc++>
     )
 
 elseif (CMAKE_CXX_COMPILER_ID MATCHES "IntelLLVM")
@@ -112,9 +118,8 @@ elseif (CMAKE_CXX_COMPILER_ID MATCHES "IntelLLVM")
 
 
         ## Preprocessor definitions
-        -DFAT_BUILDING_WITH_MSVC=0
-        $<$<STREQUAL:${CMAKE_HOST_SYSTEM_NAME},Linux>:   -DFAT_BUILDING_ON_WINDOWS=0>
-        $<$<STREQUAL:${CMAKE_HOST_SYSTEM_NAME},Windows>: -DFAT_BUILDING_ON_WINDOWS=1>
+        $<$<STREQUAL:${CMAKE_HOST_SYSTEM_NAME},Linux>:   -DFATLIB_BUILDING_ON_WINDOWS=0>
+        $<$<STREQUAL:${CMAKE_HOST_SYSTEM_NAME},Windows>: -DFATLIB_BUILDING_ON_WINDOWS=1>
 
 
         ## Configuration-specific
@@ -154,6 +159,7 @@ elseif (CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
 
 
         ## Inactive warnings
+        /external:anglebrackets # Treat includes with angular brackets as external headers
         /external:W0 # Do NOT emit warnings for external headers
 
         /wd4061 # Not all enum identifiers of an Enum (class) are handled by a switch statement (When there is a default case)
@@ -166,8 +172,8 @@ elseif (CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
 
 
         ## Preprocessor definitions
-        /DFAT_BUILDING_WITH_MSVC=1
-        /DFAT_BUILDING_ON_WINDOWS=1
+        /DFATLIB_BUILDING_WITH_MSVC=1
+        /DFATLIB_BUILDING_ON_WINDOWS=1
         /DNOMINMAX
         /DSTRICT
         /D_UNICODE
@@ -197,7 +203,7 @@ elseif (CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
             /DIN_DEBUG=false
             /DIN_RELEASE=true
 
-            
+
             /Qpar # Enable auto-parallelization of loops with #pragma loop directive
 
             $<$<STREQUAL:${FATCXX_MSVC_FULLREPORT},Enabled>:
