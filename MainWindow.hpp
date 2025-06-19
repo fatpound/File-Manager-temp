@@ -17,6 +17,7 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(const QString& title, QWidget* parent = nullptr);
 
+    explicit MainWindow()                      = delete;
     explicit MainWindow(const MainWindow&)     = delete;
     explicit MainWindow(MainWindow&&) noexcept = delete;
 
@@ -26,10 +27,6 @@ public:
 
 
 protected:
-
-
-private slots:
-    void on_action_eXit_triggered();
 
 
 private:
@@ -45,10 +42,14 @@ private:
     UIManager m_UIMgr_;
 
     TableViewManager m_TableViewMgr_;
-    // TableManager m_TableViewMgr2_;
+    TableViewManager m_TableViewMgr2_;
 
     TabWidgetManager m_TabWidgetMgr_;
-    // TabManager m_TabWidgetMgr2_;
+    TabWidgetManager m_TabWidgetMgr2_;
+
+
+private slots:
+    void on_action_eXit_triggered();
 };
 
 #endif // MAINWINDOW_HPP

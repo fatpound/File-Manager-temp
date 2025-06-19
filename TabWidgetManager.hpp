@@ -11,6 +11,7 @@ class TabWidgetManager : public QObject
 public:
     explicit TabWidgetManager(QTabWidget* tabWidget, QObject* parent = nullptr);
 
+    explicit TabWidgetManager()                            = delete;
     explicit TabWidgetManager(const TabWidgetManager&)     = delete;
     explicit TabWidgetManager(TabWidgetManager&&) noexcept = delete;
 

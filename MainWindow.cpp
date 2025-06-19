@@ -12,7 +12,9 @@ MainWindow::MainWindow(const QString& title, QWidget* parent)
     ui(new Ui::MainWindow),
     m_UIMgr_(ui, this),
     m_TableViewMgr_(ui->tableView, this),
-    m_TabWidgetMgr_(ui->tabWidget, this)
+    m_TableViewMgr2_(ui->tableView_2, this),
+    m_TabWidgetMgr_(ui->tabWidget, this),
+    m_TabWidgetMgr2_(ui->tabWidget_2, this)
 {
     setWindowFlags(Qt::Window | Qt::WindowMinimizeButtonHint | Qt::WindowMaximizeButtonHint | Qt::CustomizeWindowHint | Qt::WindowCloseButtonHint);
     setWindowTitle(title);

@@ -13,6 +13,7 @@ class TableViewManager : public QObject
 public:
     explicit TableViewManager(QTableView* tableView, QObject* parent = nullptr);
 
+    explicit TableViewManager()                            = delete;
     explicit TableViewManager(const TableViewManager&)     = delete;
     explicit TableViewManager(TableViewManager&&) noexcept = delete;
 
@@ -42,7 +43,7 @@ private:
     QString           m_root_path_;
 
     QTableView*       m_TableView_;
-    QFileSystemModel* m_FileSysModel_; // başka sınıfa alınabilir
+    QFileSystemModel* m_FileSysModel_;
 };
 
 #endif // TABLEVIEWMANAGER_H
