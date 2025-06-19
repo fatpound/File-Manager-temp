@@ -41,11 +41,8 @@ private:
 
     UIManager m_UIMgr_;
 
-    TableViewManager m_TableViewMgr_;
-    TableViewManager m_TableViewMgr2_;
-
-    TabWidgetManager m_TabWidgetMgr_;
-    TabWidgetManager m_TabWidgetMgr2_;
+    TabWidgetManager m_pTabWidgetMgr_;
+    TabWidgetManager m_pTabWidgetMgr2_;
 
 
 private slots:

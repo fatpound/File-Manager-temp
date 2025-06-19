@@ -42,8 +42,8 @@ private:
 private:
     QString           m_root_path_;
 
-    QTableView*       m_TableView_;
-    QFileSystemModel* m_FileSysModel_;
+    QTableView*       m_pTableView_;
+    QFileSystemModel* m_pFileSysModel_;
 };
 
 #endif // TABLEVIEWMANAGER_H

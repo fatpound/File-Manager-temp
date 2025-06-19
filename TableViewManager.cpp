@@ -1,11 +1,11 @@
 #include "TableViewManager.hpp"
 
-TableViewManager::TableViewManager(QTableView* tableView, QObject* parent)
+TableViewManager::TableViewManager(QTableView* const tableView, QObject* const parent)
     :
     QObject{parent},
     m_root_path_(QDir::rootPath()),
-    m_TableView_(tableView),
-    m_FileSysModel_(new QFileSystemModel(this))
+    m_pTableView_(tableView),
+    m_pFileSysModel_(new QFileSystemModel(this))
 {
     Setup_();
 }
@@ -14,6 +14,7 @@ TableViewManager::~TableViewManager()
 {
 
 }
+
 
 auto TableViewManager::GetRootPath() -> QString
 {
@@ -31,6 +32,6 @@ void TableViewManager::SetRootPath(const QString& path)
 
 void TableViewManager::Setup_()
 {
-    m_FileSysModel_->setRootPath(GetRootPath());
-    m_TableView_->setModel(m_FileSysModel_);
+    m_pFileSysModel_->setRootPath(GetRootPath());
+    m_pTableView_->setModel(m_pFileSysModel_);
 }
