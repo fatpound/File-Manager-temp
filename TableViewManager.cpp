@@ -1,5 +1,7 @@
 #include "TableViewManager.hpp"
 
+#include <QHeaderView>
+
 TableViewManager::TableViewManager(QTableView* const tableView, QObject* const parent)
     :
     QObject{parent},
@@ -34,4 +36,6 @@ void TableViewManager::Setup_()
 {
     m_pFileSysModel_->setRootPath(GetRootPath());
     m_pTableView_->setModel(m_pFileSysModel_);
+
+    m_pTableView_->verticalHeader()->setVisible(false);
 }
