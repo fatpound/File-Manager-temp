@@ -1,12 +1,12 @@
 #include "MainWindow.hpp"
 #include "ui_mainwindow.h"
 
-MainWindow::UIManager::UIManager(Ui::MainWindow*& theUi, QMainWindow* pWnd)
+MainWindow::UIManager::UIManager(Ui::MainWindow*& theUi, QMainWindow* const pWnd)
 {
     theUi->setupUi(pWnd);
 }
 
-MainWindow::MainWindow(const QString& title, QWidget* parent)
+MainWindow::MainWindow(const QString& title, QWidget* const parent)
     :
     QMainWindow(parent),
     ui(new Ui::MainWindow),

@@ -56,10 +56,10 @@ void TabWidgetManager::InitAddButton_()
 
 void TabWidgetManager::AddTab_()
 {
-    auto* pTableView = new QTableView;
+    auto* const pTableView = new QTableView;
 
     {
-        auto* tab = new QWidget;
+        auto* const tab = new QWidget;
         (new QVBoxLayout(tab))->addWidget(pTableView);
 
         m_pTabWidget_->setCurrentIndex(
