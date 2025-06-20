@@ -60,6 +60,7 @@ void TableViewManager::Setup_()
     m_pTableView_->setHorizontalScrollMode(QTableView::ScrollMode::ScrollPerPixel);
     m_pTableView_->setVerticalScrollMode(QTableView::ScrollMode::ScrollPerPixel);
     m_pTableView_->setSortingEnabled(true);
+    m_pTableView_->sortByColumn(0, Qt::SortOrder::AscendingOrder);
     m_pTableView_->verticalHeader()->setVisible(false);
 }
 
