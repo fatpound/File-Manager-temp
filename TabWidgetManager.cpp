@@ -9,16 +9,9 @@ TabWidgetManager::TabWidgetManager(QTabWidget* const tabWidget, QTableView* cons
     QObject{parent},
     m_pTabWidget_(tabWidget)
 {
-    InitAddButton_();
+    Setup_();
 
     m_pTableViewMgr_vec_.push_back(new TableViewManager(firstTable, this));
-
-    connect(
-        m_pTabWidget_,
-        &QTabWidget::tabCloseRequested,
-        this,
-        &TabWidgetManager::RemoveCurrentTab_
-    );
 }
 
 
@@ -30,6 +23,35 @@ auto TabWidgetManager::GetTabCount() -> int
 auto TabWidgetManager::GetCurrentTabIndex() -> int
 {
     return m_pTabWidget_->currentIndex();
+}
+
+void TabWidgetManager::Setup_()
+{
+    InitAddButton_();
+
+    connect(
+        m_pTabWidget_,
+        &QTabWidget::tabCloseRequested,
+        this,
+        &TabWidgetManager::RemoveTab_
+    );
+}
+
+void TabWidgetManager::InitAddButton_()
+{
+    auto* const plusButton = new QToolButton(m_pTabWidget_->tabBar());
+
+    plusButton->setText("+");
+    plusButton->setAutoRaise(true);
+
+    m_pTabWidget_->setCornerWidget(plusButton, Qt::Corner::TopLeftCorner);
+
+    connect(
+        plusButton,
+        &QToolButton::clicked,
+        this,
+        &TabWidgetManager::AddTab_
+    );
 }
 
 void TabWidgetManager::AddTab_()
@@ -50,30 +72,11 @@ void TabWidgetManager::AddTab_()
 
 void TabWidgetManager::RemoveTab_(const int& index)
 {
-    m_pTabWidget_->removeTab(index);
-}
-
-void TabWidgetManager::RemoveCurrentTab_()
-{
-    if (GetTabCount() not_eq 1)
+    if (GetTabCount() == 1)
     {
-        RemoveTab_(GetCurrentTabIndex());
+        return;
     }
-}
 
-void TabWidgetManager::InitAddButton_()
-{
-    auto* const plusButton = new QToolButton(m_pTabWidget_->tabBar());
-
-    plusButton->setText("+");
-    plusButton->setAutoRaise(true);
-
-    m_pTabWidget_->setCornerWidget(plusButton, Qt::Corner::TopLeftCorner);
-
-    connect(
-        plusButton,
-        &QToolButton::clicked,
-        this,
-        &TabWidgetManager::AddTab_
-    );
+    m_pTabWidget_->removeTab(index);
+    m_pTableViewMgr_vec_.erase(m_pTableViewMgr_vec_.begin() + index);
 }

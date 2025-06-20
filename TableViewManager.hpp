@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QTableView>
 #include <QFileSystemModel>
+#include <QModelIndex>
 #include <QDir>
 
 class TableViewManager : public QObject
@@ -28,6 +29,8 @@ public:
     void SetRootPath(const QDir&    path);
     void SetRootPath(const QString& path);
 
+    void NavigateToFolder(const QModelIndex& firstColumnIdx);
+
 
 signals:
 
@@ -37,6 +40,7 @@ protected:
 
 private:
     void Setup_();
+    void ProcessDoubleClick_(const QModelIndex& midx);
 
 
 private:
@@ -44,6 +48,8 @@ private:
 
     QTableView*       m_pTableView_;
     QFileSystemModel* m_pFileSysModel_;
+
+    int               m_tab_index_{-1};
 };
 
 #endif // TABLEVIEWMANAGER_H

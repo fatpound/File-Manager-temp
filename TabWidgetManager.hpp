@@ -7,11 +7,11 @@
 #include <QTabWidget>
 #include <QTableView>
 
+#include <vector>
+
 class TabWidgetManager : public QObject
 {
     Q_OBJECT
-
-    static constexpr auto scx_AddTabIndex_ = 0; // Tabs start after this index
 
 public:
     explicit TabWidgetManager(QTabWidget* tabWidget, QTableView* firstTable, QObject* parent = nullptr);
@@ -37,10 +37,10 @@ protected:
 
 
 private:
+    void Setup_();
+    void InitAddButton_();
     void AddTab_();
     void RemoveTab_(const int& index);
-    void RemoveCurrentTab_();
-    void InitAddButton_();
 
 
 private:
