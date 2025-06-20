@@ -59,11 +59,11 @@ void TabWidgetManager::AddTab_()
     auto* pTableView = new QTableView;
 
     {
-        auto* container = new QWidget;
-        (new QVBoxLayout(container))->addWidget(pTableView);
+        auto* tab = new QWidget;
+        (new QVBoxLayout(tab))->addWidget(pTableView);
 
         m_pTabWidget_->setCurrentIndex(
-            m_pTabWidget_->addTab(container, "New Tab")
+            m_pTabWidget_->addTab(tab, "New Tab")
         );
     }
 

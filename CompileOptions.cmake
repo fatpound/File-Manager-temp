@@ -35,8 +35,7 @@ if (CMAKE_CXX_COMPILER_ID MATCHES "GNU")
 
 
         ## Preprocessor definitions
-        $<$<STREQUAL:${CMAKE_HOST_SYSTEM_NAME},Linux>:   -DFATLIB_BUILDING_ON_WINDOWS=0>
-        $<$<STREQUAL:${CMAKE_HOST_SYSTEM_NAME},Windows>: -DFATLIB_BUILDING_ON_WINDOWS=1>
+        $<$<STREQUAL:${CMAKE_HOST_SYSTEM_NAME},Windows>: -DFATLIB_BUILDING_ON_WINDOWS -DUNICODE -D_UNICODE -DSTRICT -DNOMINMAX>
 
 
         ## Configuration-specific
@@ -82,8 +81,7 @@ elseif (CMAKE_CXX_COMPILER_ID MATCHES "Clang")
 
 
         ## Preprocessor definitions
-        $<$<STREQUAL:${CMAKE_HOST_SYSTEM_NAME},Linux>:   -DFATLIB_BUILDING_ON_WINDOWS=0>
-        $<$<STREQUAL:${CMAKE_HOST_SYSTEM_NAME},Windows>: -DFATLIB_BUILDING_ON_WINDOWS=1>
+        $<$<STREQUAL:${CMAKE_HOST_SYSTEM_NAME},Windows>: -DFATLIB_BUILDING_ON_WINDOWS -DUNICODE -D_UNICODE -DSTRICT -DNOMINMAX>
 
 
         ## Configuration-specific
@@ -126,8 +124,7 @@ elseif (CMAKE_CXX_COMPILER_ID MATCHES "IntelLLVM")
 
 
         ## Preprocessor definitions
-        $<$<STREQUAL:${CMAKE_HOST_SYSTEM_NAME},Linux>:   -DFATLIB_BUILDING_ON_WINDOWS=0>
-        $<$<STREQUAL:${CMAKE_HOST_SYSTEM_NAME},Windows>: -DFATLIB_BUILDING_ON_WINDOWS=1>
+        $<$<STREQUAL:${CMAKE_HOST_SYSTEM_NAME},Windows>: -DFATLIB_BUILDING_ON_WINDOWS -DUNICODE -D_UNICODE -DSTRICT -DNOMINMAX>
 
 
         ## Configuration-specific
@@ -184,8 +181,8 @@ elseif (CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
 
 
         ## Preprocessor definitions
-        /DFATLIB_BUILDING_WITH_MSVC=1
-        /DFATLIB_BUILDING_ON_WINDOWS=1
+        /DFATLIB_BUILDING_WITH_MSVC
+        /DFATLIB_BUILDING_ON_WINDOWS
         /DNOMINMAX
         /DSTRICT
         /D_UNICODE
@@ -201,7 +198,7 @@ elseif (CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
             /wd4710 # Function not inlined
             /wd4711 # Function selected for inline expansion
 
-            /DIN_DEBUG=1
+            /DIN_DEBUG
         >
         $<$<CONFIG:Release>:
             /O2
@@ -211,7 +208,7 @@ elseif (CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
             /GF  # String pooling
             /GL  # Whole-program optimization
 
-            /DIN_RELEASE=1
+            /DIN_RELEASE
 
 
             ## Advanced Options

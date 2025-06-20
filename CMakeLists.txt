@@ -14,13 +14,11 @@ qt_standard_project_setup()
 qt_add_executable(File-Manager
     WIN32 MACOSX_BUNDLE
     main.cpp
-    MainWindow.cpp
-    MainWindow.hpp
+    MainWindow.hpp MainWindow.cpp
     mainwindow.ui
 
     TabWidgetManager.hpp TabWidgetManager.cpp
     TableViewManager.hpp TableViewManager.cpp
-
 
     .clang-format .clang-tidy
 )

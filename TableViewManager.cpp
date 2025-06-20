@@ -43,13 +43,13 @@ void TableViewManager::SetRootPath(const QString& path)
 
 void TableViewManager::NavigateToFolder(const QModelIndex& firstColumnIdx)
 {
-    if (not m_pFileSysModel_->hasChildren(firstColumnIdx))
+    if (m_pFileSysModel_->hasChildren(firstColumnIdx))
     {
-        QDesktopServices::openUrl(QUrl::fromLocalFile(m_pFileSysModel_->filePath(firstColumnIdx)));
+        m_pTableView_->setRootIndex(firstColumnIdx);
     }
     else
     {
-        m_pTableView_->setRootIndex(firstColumnIdx);
+        QDesktopServices::openUrl(QUrl::fromLocalFile(m_pFileSysModel_->filePath(firstColumnIdx)));
     }
 }
 
@@ -57,16 +57,12 @@ void TableViewManager::Setup_()
 {
     m_pFileSysModel_->setRootPath(GetRootPath());
     m_pTableView_->setModel(m_pFileSysModel_);
+    m_pTableView_->setHorizontalScrollMode(QTableView::ScrollMode::ScrollPerPixel);
+    m_pTableView_->setVerticalScrollMode(QTableView::ScrollMode::ScrollPerPixel);
     m_pTableView_->verticalHeader()->setVisible(false);
 }
 
 void TableViewManager::ProcessDoubleClick_(const QModelIndex& midx)
 {
     NavigateToFolder(midx.siblingAtColumn(0));
-
-    // const auto& path = static_cast<QFileSystemModel*>(ui->FileTreeView->model())->filePath(firstColumnIndex);
-
-    // SetLabelText_(path);
-    // leftTabIsReset_ = false;
-    // isWorkingOnRightPane = false;
 }

@@ -1,7 +1,6 @@
 #ifndef MAINWINDOW_HPP
 #define MAINWINDOW_HPP
 
-#include "TableViewManager.hpp"
 #include "TabWidgetManager.hpp"
 
 #include <QMainWindow>
