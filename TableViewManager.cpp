@@ -12,13 +12,6 @@ TableViewManager::TableViewManager(QTableView* const tableView, QObject* const p
     m_pFileSysModel_(new QFileSystemModel(this))
 {
     Setup_();
-
-    connect(
-        m_pTableView_,
-        &QTableView::doubleClicked,
-        this,
-        &TableViewManager::ProcessDoubleClick_
-    );
 }
 
 TableViewManager::~TableViewManager()
@@ -62,6 +55,13 @@ void TableViewManager::Setup_()
     m_pTableView_->setSortingEnabled(true);
     m_pTableView_->sortByColumn(0, Qt::SortOrder::AscendingOrder);
     m_pTableView_->verticalHeader()->setVisible(false);
+
+    connect(
+        m_pTableView_,
+        &QTableView::doubleClicked,
+        this,
+        &TableViewManager::ProcessDoubleClick_
+    );
 }
 
 void TableViewManager::ProcessDoubleClick_(const QModelIndex& midx)
