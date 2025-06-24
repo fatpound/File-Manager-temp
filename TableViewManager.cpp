@@ -55,6 +55,7 @@ void TableViewManager::Setup_()
     m_pTableView_->setSortingEnabled(true);
     m_pTableView_->sortByColumn(0, Qt::SortOrder::AscendingOrder);
     m_pTableView_->verticalHeader()->setVisible(false);
+    m_pTableView_->horizontalHeader()->setStretchLastSection(true);
 
     connect(
         m_pTableView_,
