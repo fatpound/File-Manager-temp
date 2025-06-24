@@ -40,6 +40,7 @@ private:
     void Setup_();
     void InitAddButton_();
     void AddTab_();
+    void SwapTabs_(const int& from, const int& to);
     void RemoveTab_(const int& index);
 
 

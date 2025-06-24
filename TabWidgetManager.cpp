@@ -3,6 +3,9 @@
 #include <QWidget>
 #include <QToolButton>
 #include <QVBoxLayout>
+#include <QTabBar>
+
+#include <utility>
 
 TabWidgetManager::TabWidgetManager(QTabWidget* const tabWidget, QTableView* const firstTable, QObject* const parent)
     :
@@ -34,6 +37,13 @@ void TabWidgetManager::Setup_()
         &QTabWidget::tabCloseRequested,
         this,
         &TabWidgetManager::RemoveTab_
+    );
+
+    connect(
+        m_pTabWidget_->tabBar(),
+        &QTabBar::tabMoved,
+        this,
+        &TabWidgetManager::SwapTabs_
     );
 }
 
@@ -68,6 +78,11 @@ void TabWidgetManager::AddTab_()
     }
 
     m_pTableViewMgr_vec_.push_back(new TableViewManager(pTableView, this));
+}
+
+void TabWidgetManager::SwapTabs_(const int& from, const int& to)
+{
+    std::swap(m_pTableViewMgr_vec_[from], m_pTableViewMgr_vec_[to]);
 }
 
 void TabWidgetManager::RemoveTab_(const int& index)
