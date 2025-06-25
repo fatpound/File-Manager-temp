@@ -27,9 +27,9 @@ public:
 
 
 public:
-    auto GetTabWidget       () const noexcept -> QTabWidget*;
-    auto GetTabCount        () const -> int;
-    auto GetCurrentTabIndex () const -> int;
+    [[nodiscard]] auto GetTabWidget       () const noexcept -> QTabWidget*;
+    [[nodiscard]] auto GetTabCount        () const -> int;
+    [[nodiscard]] auto GetCurrentTabIndex () const -> int;
 
 
 signals:

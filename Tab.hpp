@@ -4,6 +4,7 @@
 #include "TableViewManager.hpp"
 
 #include <QObject>
+#include <QWidget>
 #include <QTabWidget>
 #include <QTableView>
 

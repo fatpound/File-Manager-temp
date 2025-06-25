@@ -4,6 +4,8 @@
 #include "TabWidgetManager.hpp"
 
 #include <QMainWindow>
+#include <QWidget>
+#include <QString>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }

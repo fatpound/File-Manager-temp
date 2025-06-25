@@ -2,7 +2,7 @@
 
 #include <QWidget>
 #include <QVBoxLayout>
-#include <QDebug>
+#include <QtLogging>
 
 Tab::Tab(QTableView* const pTableView, QObject* const parentForMgr)
     :

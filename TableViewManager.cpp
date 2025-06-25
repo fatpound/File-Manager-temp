@@ -3,7 +3,7 @@
 #include <QHeaderView>
 #include <QDesktopServices>
 #include <QUrl>
-#include <QDebug>
+#include <QtLogging>
 
 TableViewManager::TableViewManager(QTableView* const tableView, QObject* const parent)
     :

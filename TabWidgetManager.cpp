@@ -8,7 +8,7 @@
 #include <QIcon>
 #include <QFileInfo>
 #include <QString>
-#include <QDebug>
+#include <QtLogging>
 
 #include <utility>
 

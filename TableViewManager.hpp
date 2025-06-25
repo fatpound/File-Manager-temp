@@ -26,9 +26,9 @@ public:
 
 
 public:
-    auto GetRootPath      () const          -> QString;
-    auto GetTableView     () const noexcept -> QTableView*;
-    auto GetFileSysModel  () const noexcept -> QFileSystemModel*;
+    [[nodiscard]] auto GetRootPath      () const          -> QString;
+    [[nodiscard]] auto GetTableView     () const noexcept -> QTableView*;
+    [[nodiscard]] auto GetFileSysModel  () const noexcept -> QFileSystemModel*;
 
     void SetRootPath      (const QDir&    path);
     void SetRootPath      (const QString& path);
