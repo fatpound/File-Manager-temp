@@ -20,11 +20,13 @@ public:
 
     auto operator = (const TableViewManager&)     -> TableViewManager& = delete;
     auto operator = (TableViewManager&&) noexcept -> TableViewManager& = delete;
-    ~TableViewManager() override;
+    ~TableViewManager() override                                       = default;
 
 
 public:
-    auto GetRootPath() -> QString;
+    auto GetRootPath     () const          -> QString;
+    auto GetTableView    () const noexcept -> QTableView*;
+    auto GetFileSysModel () const noexcept -> QFileSystemModel*;
 
     void SetRootPath(const QDir&    path);
     void SetRootPath(const QString& path);
@@ -48,8 +50,6 @@ private:
 
     QTableView*       m_pTableView_;
     QFileSystemModel* m_pFileSysModel_;
-
-    int               m_tab_index_{-1};
 };
 
 #endif // TABLEVIEWMANAGER_H

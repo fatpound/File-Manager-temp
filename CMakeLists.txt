@@ -19,6 +19,7 @@ qt_add_executable(File-Manager
 
     TabWidgetManager.hpp TabWidgetManager.cpp
     TableViewManager.hpp TableViewManager.cpp
+    Tab.hpp              Tab.cpp
 
     .clang-format .clang-tidy
 )

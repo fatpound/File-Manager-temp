@@ -14,15 +14,20 @@ TableViewManager::TableViewManager(QTableView* const tableView, QObject* const p
     Setup_();
 }
 
-TableViewManager::~TableViewManager()
-{
 
-}
-
-
-auto TableViewManager::GetRootPath() -> QString
+auto TableViewManager::GetRootPath() const -> QString
 {
     return m_root_path_;
+}
+
+auto TableViewManager::GetTableView() const noexcept -> QTableView*
+{
+    return m_pTableView_;
+}
+
+auto TableViewManager::GetFileSysModel() const noexcept -> QFileSystemModel*
+{
+    return m_pFileSysModel_;
 }
 
 void TableViewManager::SetRootPath(const QDir& path)

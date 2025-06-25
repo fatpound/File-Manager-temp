@@ -14,18 +14,23 @@ TabWidgetManager::TabWidgetManager(QTabWidget* const tabWidget, QTableView* cons
 {
     Setup_();
 
-    m_pTableViewMgr_vec_.push_back(new TableViewManager(firstTable, this));
+    m_tabs_.emplace_back(firstTable, this);
 }
 
 
-auto TabWidgetManager::GetTabCount() -> int
+auto TabWidgetManager::GetTabWidget() const noexcept -> QTabWidget*
 {
-    return m_pTabWidget_->count();
+    return m_pTabWidget_;
 }
 
-auto TabWidgetManager::GetCurrentTabIndex() -> int
+auto TabWidgetManager::GetTabCount() const -> int
 {
-    return m_pTabWidget_->currentIndex();
+    return GetTabWidget()->count();
+}
+
+auto TabWidgetManager::GetCurrentTabIndex() const -> int
+{
+    return GetTabWidget()->currentIndex();
 }
 
 void TabWidgetManager::Setup_()
@@ -33,14 +38,14 @@ void TabWidgetManager::Setup_()
     InitAddButton_();
 
     connect(
-        m_pTabWidget_,
+        GetTabWidget(),
         &QTabWidget::tabCloseRequested,
         this,
         &TabWidgetManager::RemoveTab_
     );
 
     connect(
-        m_pTabWidget_->tabBar(),
+        GetTabWidget()->tabBar(),
         &QTabBar::tabMoved,
         this,
         &TabWidgetManager::SwapTabs_
@@ -49,12 +54,12 @@ void TabWidgetManager::Setup_()
 
 void TabWidgetManager::InitAddButton_()
 {
-    auto* const plusButton = new QToolButton(m_pTabWidget_->tabBar());
+    auto* const plusButton = new QToolButton(GetTabWidget()->tabBar());
 
     plusButton->setText("+");
     plusButton->setAutoRaise(true);
 
-    m_pTabWidget_->setCornerWidget(plusButton, Qt::Corner::TopLeftCorner);
+    GetTabWidget()->setCornerWidget(plusButton, Qt::Corner::TopLeftCorner);
 
     connect(
         plusButton,
@@ -66,23 +71,12 @@ void TabWidgetManager::InitAddButton_()
 
 void TabWidgetManager::AddTab_()
 {
-    auto* const pTableView = new QTableView;
-
-    {
-        auto* const tab = new QWidget;
-        (new QVBoxLayout(tab))->addWidget(pTableView);
-
-        m_pTabWidget_->setCurrentIndex(
-            m_pTabWidget_->addTab(tab, "New Tab")
-        );
-    }
-
-    m_pTableViewMgr_vec_.push_back(new TableViewManager(pTableView, this));
+    m_tabs_.emplace_back(GetTabWidget(), this);
 }
 
 void TabWidgetManager::SwapTabs_(const int& from, const int& to)
 {
-    std::swap(m_pTableViewMgr_vec_[from], m_pTableViewMgr_vec_[to]);
+    std::swap<>(m_tabs_[from], m_tabs_[to]);
 }
 
 void TabWidgetManager::RemoveTab_(const int& index)
@@ -92,6 +86,6 @@ void TabWidgetManager::RemoveTab_(const int& index)
         return;
     }
 
-    m_pTabWidget_->removeTab(index);
-    m_pTableViewMgr_vec_.erase(m_pTableViewMgr_vec_.begin() + index);
+    GetTabWidget()->removeTab(index);
+    m_tabs_.erase(m_tabs_.begin() + index);
 }

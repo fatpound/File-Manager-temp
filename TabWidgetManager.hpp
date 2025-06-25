@@ -1,7 +1,7 @@
 #ifndef TABWIDGETMANAGER_H
 #define TABWIDGETMANAGER_H
 
-#include "TableViewManager.hpp"
+#include "Tab.hpp"
 
 #include <QObject>
 #include <QTabWidget>
@@ -26,8 +26,10 @@ public:
 
 
 public:
-    auto GetTabCount        () -> int;
-    auto GetCurrentTabIndex () -> int;
+    auto GetTabWidget       () const noexcept -> QTabWidget*;
+
+    auto GetTabCount        () const -> int;
+    auto GetCurrentTabIndex () const -> int;
 
 
 signals:
@@ -45,9 +47,9 @@ private:
 
 
 private:
-    QTabWidget*                    m_pTabWidget_;
+    QTabWidget*      m_pTabWidget_;
 
-    std::vector<TableViewManager*> m_pTableViewMgr_vec_;
+    std::vector<Tab> m_tabs_;
 };
 
 #endif // TABWIDGETMANAGER_H
