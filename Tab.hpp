@@ -10,8 +10,8 @@
 class Tab
 {
 public:
-    explicit Tab(QTableView* pTableView, QObject* parent = nullptr);
-    explicit Tab(QTabWidget* pTabWidget, QObject* parent = nullptr);
+    explicit Tab(QTableView* pTableView, QObject* parentForMgr = nullptr);
+    explicit Tab(QTabWidget* pTabWidget, QObject* parentForMgr = nullptr);
 
     explicit Tab()           = delete;
     explicit Tab(const Tab&) = delete;
