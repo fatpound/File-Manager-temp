@@ -13,15 +13,17 @@ qt_standard_project_setup()
 
 qt_add_executable(File-Manager
     WIN32 MACOSX_BUNDLE
+
     main.cpp
-    MainWindow.hpp MainWindow.cpp
     mainwindow.ui
+    MainWindow.hpp          MainWindow.cpp
 
-    TabWidgetManager.hpp TabWidgetManager.cpp
-    TableViewManager.hpp TableViewManager.cpp
-    Tab.hpp              Tab.cpp
+    TabWidgetManager.hpp    TabWidgetManager.cpp
+    TableViewManager.hpp    TableViewManager.cpp
+    Tab.hpp                 Tab.cpp
 
-    .clang-format .clang-tidy
+    .clang-format
+    .clang-tidy
 )
 
 include(CompileOptions.cmake)

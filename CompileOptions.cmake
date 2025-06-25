@@ -35,7 +35,7 @@ if (CMAKE_CXX_COMPILER_ID MATCHES "GNU")
 
 
         ## Preprocessor definitions
-        $<$<STREQUAL:${CMAKE_HOST_SYSTEM_NAME},Windows>: -DFATLIB_BUILDING_ON_WINDOWS -DUNICODE -D_UNICODE -DSTRICT -DNOMINMAX>
+        $<$<STREQUAL:${CMAKE_HOST_SYSTEM_NAME},Windows>: -DFATLIB_BUILDING_ON_WINDOWS -D_UNICODE -DUNICODE -DSTRICT -DNOMINMAX>
 
 
         ## Configuration-specific
@@ -45,13 +45,15 @@ if (CMAKE_CXX_COMPILER_ID MATCHES "GNU")
             -Werror
 
             -DIN_DEBUG
+            $<$<STREQUAL:${CMAKE_HOST_SYSTEM_NAME},Windows>: -D_DEBUG>
         >
         $<$<CONFIG:Release>:
             -O3
 
-            -DIN_RELEASE
-
             -march=native
+
+            -DIN_RELEASE
+            $<$<STREQUAL:${CMAKE_HOST_SYSTEM_NAME},Windows>: -DNDEBUG>
         >
     )
 
@@ -63,6 +65,7 @@ elseif (CMAKE_CXX_COMPILER_ID MATCHES "Clang")
 
         ## Active warnings
         -Weverything
+        -Wpedantic
 
 
         ## Inactive warnings
@@ -81,7 +84,7 @@ elseif (CMAKE_CXX_COMPILER_ID MATCHES "Clang")
 
 
         ## Preprocessor definitions
-        $<$<STREQUAL:${CMAKE_HOST_SYSTEM_NAME},Windows>: -DFATLIB_BUILDING_ON_WINDOWS -DUNICODE -D_UNICODE -DSTRICT -DNOMINMAX>
+        $<$<STREQUAL:${CMAKE_HOST_SYSTEM_NAME},Windows>: -DFATLIB_BUILDING_ON_WINDOWS -D_UNICODE -DUNICODE -DSTRICT -DNOMINMAX>
 
 
         ## Configuration-specific
@@ -91,13 +94,15 @@ elseif (CMAKE_CXX_COMPILER_ID MATCHES "Clang")
             -Werror
 
             -DIN_DEBUG
+            $<$<STREQUAL:${CMAKE_HOST_SYSTEM_NAME},Windows>: -D_DEBUG>
         >
         $<$<CONFIG:Release>:
             -O3
 
-            -DIN_RELEASE
-
             -march=native
+
+            -DIN_RELEASE
+            $<$<STREQUAL:${CMAKE_HOST_SYSTEM_NAME},Windows>: -DNDEBUG>
         >
 
 
@@ -124,7 +129,7 @@ elseif (CMAKE_CXX_COMPILER_ID MATCHES "IntelLLVM")
 
 
         ## Preprocessor definitions
-        $<$<STREQUAL:${CMAKE_HOST_SYSTEM_NAME},Windows>: -DFATLIB_BUILDING_ON_WINDOWS -DUNICODE -D_UNICODE -DSTRICT -DNOMINMAX>
+        $<$<STREQUAL:${CMAKE_HOST_SYSTEM_NAME},Windows>: -DFATLIB_BUILDING_ON_WINDOWS -D_UNICODE -DUNICODE -DSTRICT -DNOMINMAX>
 
 
         ## Configuration-specific
@@ -135,11 +140,13 @@ elseif (CMAKE_CXX_COMPILER_ID MATCHES "IntelLLVM")
             -Werror
 
             -DIN_DEBUG
+            $<$<STREQUAL:${CMAKE_HOST_SYSTEM_NAME},Windows>: -D_DEBUG>
         >
         $<$<CONFIG:Release>:
             -O2
 
             -DIN_RELEASE
+            $<$<STREQUAL:${CMAKE_HOST_SYSTEM_NAME},Windows>: -DNDEBUG>
         >
     )
 
@@ -183,10 +190,10 @@ elseif (CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
         ## Preprocessor definitions
         /DFATLIB_BUILDING_WITH_MSVC
         /DFATLIB_BUILDING_ON_WINDOWS
-        /DNOMINMAX
-        /DSTRICT
         /D_UNICODE
         /DUNICODE
+        /DSTRICT
+        /DNOMINMAX
 
 
         ## Configuration-specific
@@ -199,6 +206,7 @@ elseif (CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
             /wd4711 # Function selected for inline expansion
 
             /DIN_DEBUG
+            /D_DEBUG
         >
         $<$<CONFIG:Release>:
             /O2
@@ -209,6 +217,7 @@ elseif (CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
             /GL  # Whole-program optimization
 
             /DIN_RELEASE
+            /DNDEBUG
 
 
             ## Advanced Options
@@ -219,6 +228,11 @@ elseif (CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
                 /Qvec-report:2 # Auto-vectorizer   reporting (Max)
             >
         >
+    )
+
+    target_link_options(CompileOptions INTERFACE
+        ##################################
+        /ERRORREPORT:NONE # Don't report internal linker errors
     )
 
 endif ()
