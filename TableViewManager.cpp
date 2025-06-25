@@ -41,29 +41,30 @@ void TableViewManager::SetRootPath(const QString& path)
 
 void TableViewManager::NavigateToFolder(const QModelIndex& firstColumnIdx)
 {
-    if (m_pFileSysModel_->hasChildren(firstColumnIdx))
+    if (GetFileSysModel()->hasChildren(firstColumnIdx))
     {
-        m_pTableView_->setRootIndex(firstColumnIdx);
+        GetTableView()->setRootIndex(firstColumnIdx);
     }
     else
     {
-        QDesktopServices::openUrl(QUrl::fromLocalFile(m_pFileSysModel_->filePath(firstColumnIdx)));
+        QDesktopServices::openUrl(QUrl::fromLocalFile(GetFileSysModel()->filePath(firstColumnIdx)));
     }
 }
 
 void TableViewManager::Setup_()
 {
-    m_pFileSysModel_->setRootPath(GetRootPath());
-    m_pTableView_->setModel(m_pFileSysModel_);
-    m_pTableView_->setHorizontalScrollMode(QTableView::ScrollMode::ScrollPerPixel);
-    m_pTableView_->setVerticalScrollMode(QTableView::ScrollMode::ScrollPerPixel);
-    m_pTableView_->setSortingEnabled(true);
-    m_pTableView_->sortByColumn(0, Qt::SortOrder::AscendingOrder);
-    m_pTableView_->verticalHeader()->setVisible(false);
-    m_pTableView_->horizontalHeader()->setStretchLastSection(true);
+    GetFileSysModel()->setRootPath(GetRootPath());
+
+    GetTableView()->setModel(GetFileSysModel());
+    GetTableView()->setHorizontalScrollMode(QTableView::ScrollMode::ScrollPerPixel);
+    GetTableView()->setVerticalScrollMode(QTableView::ScrollMode::ScrollPerPixel);
+    GetTableView()->setSortingEnabled(true);
+    GetTableView()->sortByColumn(0, Qt::SortOrder::AscendingOrder);
+    GetTableView()->verticalHeader()->setVisible(false);
+    GetTableView()->horizontalHeader()->setStretchLastSection(true);
 
     connect(
-        m_pTableView_,
+        GetTableView(),
         &QTableView::doubleClicked,
         this,
         &TableViewManager::ProcessDoubleClick_
