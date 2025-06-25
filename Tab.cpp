@@ -27,6 +27,7 @@ Tab::~Tab()
     qDebug() << "Destructing Tab...";
 }
 
+
 auto Tab::GetTableViewMgr() -> TableViewManager*
 {
     return m_pTableViewMgr_;

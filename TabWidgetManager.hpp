@@ -43,6 +43,8 @@ protected:
 
 
 private:
+    auto GetCurrentTab_() -> Tab&;
+
     void Setup_();
     void InitAddButton_();
     void AddTab_();

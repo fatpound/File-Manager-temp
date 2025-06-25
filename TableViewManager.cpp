@@ -20,6 +20,7 @@ TableViewManager::~TableViewManager()
     qDebug() << "Destructing TableViewManager...";
 }
 
+
 auto TableViewManager::GetRootPath() const -> QString
 {
     return m_root_path_;

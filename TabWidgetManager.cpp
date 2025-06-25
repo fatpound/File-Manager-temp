@@ -44,6 +44,12 @@ auto TabWidgetManager::GetCurrentTabIndex() const -> int
     return GetTabWidget()->currentIndex();
 }
 
+
+auto TabWidgetManager::GetCurrentTab_() -> Tab&
+{
+    return m_tabs_[GetCurrentTabIndex()];
+}
+
 void TabWidgetManager::Setup_()
 {
     InitAddButton_();
@@ -63,7 +69,7 @@ void TabWidgetManager::Setup_()
     );
 
     connect(
-        m_tabs_[GetCurrentTabIndex()].GetTableViewMgr(),
+        GetCurrentTab_().GetTableViewMgr(),
         &TableViewManager::SelectedPathIsReady,
         this,
         &TabWidgetManager::OnFilePathReceived
@@ -92,7 +98,7 @@ void TabWidgetManager::AddTab_()
     m_tabs_.emplace_back(GetTabWidget(), new QWidget);
 
     connect(
-        m_tabs_[GetCurrentTabIndex()].GetTableViewMgr(),
+        GetCurrentTab_().GetTableViewMgr(),
         &TableViewManager::SelectedPathIsReady,
         this,
         &TabWidgetManager::OnFilePathReceived
