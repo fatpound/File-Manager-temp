@@ -10,8 +10,8 @@
 class Tab
 {
 public:
-    explicit Tab(QTableView* pTableView, QObject* parentForMgr = nullptr);
-    explicit Tab(QTabWidget* pTabWidget, QObject* parentForMgr = nullptr);
+    explicit Tab(QTableView* pTableView, QObject* parentForMgr);
+    explicit Tab(QTabWidget* pTabWidget, QWidget* pNewWidget);
 
     explicit Tab()           = delete;
     explicit Tab(const Tab&) = delete;
@@ -19,7 +19,11 @@ public:
 
     auto operator = (const Tab&)     -> Tab& = delete;
     auto operator = (Tab&&) noexcept -> Tab& = default;
-    ~Tab() noexcept                          = default;
+    ~Tab();
+
+
+public:
+    auto GetTableViewMgr() -> TableViewManager*;
 
 
 protected:

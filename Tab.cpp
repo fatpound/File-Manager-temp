@@ -2,6 +2,7 @@
 
 #include <QWidget>
 #include <QVBoxLayout>
+#include <QDebug>
 
 Tab::Tab(QTableView* const pTableView, QObject* const parentForMgr)
     :
@@ -10,14 +11,23 @@ Tab::Tab(QTableView* const pTableView, QObject* const parentForMgr)
 
 }
 
-Tab::Tab(QTabWidget* const pTabWidget, QObject* const parentForMgr)
+Tab::Tab(QTabWidget* const pTabWidget, QWidget* const pNewWidget)
     :
-    Tab(new QTableView, parentForMgr)
+    Tab(new QTableView, pNewWidget)
 {
-    auto* const tab = new QWidget;
-    (new QVBoxLayout(tab))->addWidget(m_pTableViewMgr_->GetTableView());
+    (new QVBoxLayout(pNewWidget))->addWidget(GetTableViewMgr()->GetTableView());
 
     pTabWidget->setCurrentIndex(
-        pTabWidget->addTab(tab, "New Tab")
+        pTabWidget->addTab(pNewWidget, "New Tab")
     );
+}
+
+Tab::~Tab()
+{
+    qDebug() << "Destructing Tab...";
+}
+
+auto Tab::GetTableViewMgr() -> TableViewManager*
+{
+    return m_pTableViewMgr_;
 }

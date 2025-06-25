@@ -6,6 +6,7 @@
 #include <QObject>
 #include <QTabWidget>
 #include <QTableView>
+#include <QString>
 
 #include <vector>
 
@@ -14,7 +15,7 @@ class TabWidgetManager : public QObject
     Q_OBJECT
 
 public:
-    explicit TabWidgetManager(QTabWidget* tabWidget, QTableView* firstTable, QObject* parent = nullptr);
+    explicit TabWidgetManager(QTabWidget* tabWidget, QTableView* firstTable, QObject* parent);
 
     explicit TabWidgetManager()                            = delete;
     explicit TabWidgetManager(const TabWidgetManager&)     = delete;
@@ -22,17 +23,20 @@ public:
 
     auto operator = (const TabWidgetManager&)     -> TabWidgetManager& = delete;
     auto operator = (TabWidgetManager&&) noexcept -> TabWidgetManager& = delete;
-    ~TabWidgetManager() override                                       = default;
+    ~TabWidgetManager() override;
 
 
 public:
     auto GetTabWidget       () const noexcept -> QTabWidget*;
-
     auto GetTabCount        () const -> int;
     auto GetCurrentTabIndex () const -> int;
 
 
 signals:
+
+
+public slots:
+    void OnFilePathReceived(const QString& path);
 
 
 protected:

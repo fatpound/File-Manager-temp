@@ -4,6 +4,11 @@
 #include <QToolButton>
 #include <QVBoxLayout>
 #include <QTabBar>
+#include <QFileIconProvider>
+#include <QIcon>
+#include <QFileInfo>
+#include <QString>
+#include <QDebug>
 
 #include <utility>
 
@@ -12,9 +17,15 @@ TabWidgetManager::TabWidgetManager(QTabWidget* const tabWidget, QTableView* cons
     QObject{parent},
     m_pTabWidget_(tabWidget)
 {
-    Setup_();
+    m_tabs_.reserve(10U);
+    m_tabs_.emplace_back(firstTable, GetTabWidget()->currentWidget());
 
-    m_tabs_.emplace_back(firstTable, this);
+    Setup_();
+}
+
+TabWidgetManager::~TabWidgetManager()
+{
+    qDebug() << "Destructing TabWidgetManager...";
 }
 
 
@@ -50,6 +61,13 @@ void TabWidgetManager::Setup_()
         this,
         &TabWidgetManager::SwapTabs_
     );
+
+    connect(
+        m_tabs_[GetCurrentTabIndex()].GetTableViewMgr(),
+        &TableViewManager::SelectedPathIsReady,
+        this,
+        &TabWidgetManager::OnFilePathReceived
+    );
 }
 
 void TabWidgetManager::InitAddButton_()
@@ -71,7 +89,14 @@ void TabWidgetManager::InitAddButton_()
 
 void TabWidgetManager::AddTab_()
 {
-    m_tabs_.emplace_back(GetTabWidget(), this);
+    m_tabs_.emplace_back(GetTabWidget(), new QWidget);
+
+    connect(
+        m_tabs_[GetCurrentTabIndex()].GetTableViewMgr(),
+        &TableViewManager::SelectedPathIsReady,
+        this,
+        &TabWidgetManager::OnFilePathReceived
+    );
 }
 
 void TabWidgetManager::SwapTabs_(const int& from, const int& to)
@@ -86,6 +111,16 @@ void TabWidgetManager::RemoveTab_(const int& index)
         return;
     }
 
-    GetTabWidget()->removeTab(index);
     m_tabs_.erase(m_tabs_.begin() + index);
+
+    const auto* const pTab = GetTabWidget()->widget(index);
+
+    GetTabWidget()->removeTab(index);
+
+    delete pTab;
+}
+
+void TabWidgetManager::OnFilePathReceived(const QString& path)
+{
+    GetTabWidget()->setTabIcon(GetCurrentTabIndex(), QFileIconProvider{}.icon(QFileInfo(path)));
 }

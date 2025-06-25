@@ -5,14 +5,16 @@
 #include <QTableView>
 #include <QFileSystemModel>
 #include <QModelIndex>
+#include <QString>
 #include <QDir>
+#include <QIcon>
 
 class TableViewManager : public QObject
 {
     Q_OBJECT
 
 public:
-    explicit TableViewManager(QTableView* tableView, QObject* parent = nullptr);
+    explicit TableViewManager(QTableView* tableView, QObject* parent);
 
     explicit TableViewManager()                            = delete;
     explicit TableViewManager(const TableViewManager&)     = delete;
@@ -20,21 +22,21 @@ public:
 
     auto operator = (const TableViewManager&)     -> TableViewManager& = delete;
     auto operator = (TableViewManager&&) noexcept -> TableViewManager& = delete;
-    ~TableViewManager() override                                       = default;
+    ~TableViewManager() override;
 
 
 public:
-    auto GetRootPath     () const          -> QString;
-    auto GetTableView    () const noexcept -> QTableView*;
-    auto GetFileSysModel () const noexcept -> QFileSystemModel*;
+    auto GetRootPath      () const          -> QString;
+    auto GetTableView     () const noexcept -> QTableView*;
+    auto GetFileSysModel  () const noexcept -> QFileSystemModel*;
 
-    void SetRootPath(const QDir&    path);
-    void SetRootPath(const QString& path);
-
-    void NavigateToFolder(const QModelIndex& firstColumnIdx);
+    void SetRootPath      (const QDir&    path);
+    void SetRootPath      (const QString& path);
+    void NavigateToFolder (const QModelIndex& firstColumnIdx);
 
 
 signals:
+    void SelectedPathIsReady(const QString& filepath);
 
 
 protected:

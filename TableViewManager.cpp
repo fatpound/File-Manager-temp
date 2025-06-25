@@ -3,6 +3,7 @@
 #include <QHeaderView>
 #include <QDesktopServices>
 #include <QUrl>
+#include <QDebug>
 
 TableViewManager::TableViewManager(QTableView* const tableView, QObject* const parent)
     :
@@ -14,6 +15,10 @@ TableViewManager::TableViewManager(QTableView* const tableView, QObject* const p
     Setup_();
 }
 
+TableViewManager::~TableViewManager()
+{
+    qDebug() << "Destructing TableViewManager...";
+}
 
 auto TableViewManager::GetRootPath() const -> QString
 {
@@ -44,6 +49,8 @@ void TableViewManager::NavigateToFolder(const QModelIndex& firstColumnIdx)
     if (GetFileSysModel()->hasChildren(firstColumnIdx))
     {
         GetTableView()->setRootIndex(firstColumnIdx);
+
+        SelectedPathIsReady(GetFileSysModel()->filePath(firstColumnIdx));
     }
     else
     {

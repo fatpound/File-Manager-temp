@@ -11,7 +11,7 @@ MainWindow::MainWindow(const QString& title, QWidget* const parent)
     QMainWindow(parent),
     ui(new Ui::MainWindow),
     m_UIMgr_(ui, this),
-    m_pTabWidgetMgr_(ui->tabWidget, ui->tableView, this),
+    m_pTabWidgetMgr_(ui->tabWidget,    ui->tableView,   this),
     m_pTabWidgetMgr2_(ui->tabWidget_2, ui->tableView_2, this)
 {
     setWindowFlags(Qt::Window | Qt::WindowMinimizeButtonHint | Qt::WindowMaximizeButtonHint | Qt::CustomizeWindowHint | Qt::WindowCloseButtonHint);
