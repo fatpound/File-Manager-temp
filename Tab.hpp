@@ -4,8 +4,8 @@
 #include "TableViewManager.hpp"
 
 #include <QWidget>
-#include <QTabWidget>
 #include <QTableView>
+#include <QTabWidget>
 
 class Tab
 {

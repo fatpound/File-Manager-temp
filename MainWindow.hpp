@@ -33,14 +33,14 @@ protected:
 private:
     struct UIManager final
     {
-        UIManager(Ui::MainWindow*& theUi, QMainWindow* pWnd);
+        UIManager(Ui::MainWindow* theUi, QMainWindow* pWnd);
     };
 
 
 private:
-    Ui::MainWindow* ui;
+    Ui::MainWindow*  ui;
 
-    UIManager m_UIMgr_;
+    UIManager        m_UIMgr_;
 
     TabWidgetManager m_pTabWidgetMgr_;
     TabWidgetManager m_pTabWidgetMgr2_;

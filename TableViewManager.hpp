@@ -7,7 +7,6 @@
 #include <QModelIndex>
 #include <QString>
 #include <QDir>
-#include <QIcon>
 
 class TableViewManager : public QObject
 {

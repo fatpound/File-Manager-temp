@@ -1,11 +1,8 @@
 #include "TabWidgetManager.hpp"
 
-#include <QWidget>
 #include <QToolButton>
-#include <QVBoxLayout>
 #include <QTabBar>
 #include <QFileIconProvider>
-#include <QIcon>
 #include <QFileInfo>
 #include <QString>
 #include <QtLogging>

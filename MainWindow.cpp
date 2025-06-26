@@ -1,7 +1,7 @@
 #include "MainWindow.hpp"
 #include "ui_mainwindow.h"
 
-MainWindow::UIManager::UIManager(Ui::MainWindow*& theUi, QMainWindow* const pWnd)
+MainWindow::UIManager::UIManager(Ui::MainWindow* theUi, QMainWindow* const pWnd)
 {
     theUi->setupUi(pWnd);
 }
