@@ -3,7 +3,6 @@
 
 #include "TableViewManager.hpp"
 
-#include <QObject>
 #include <QWidget>
 #include <QTabWidget>
 #include <QTableView>
@@ -11,8 +10,8 @@
 class Tab
 {
 public:
-    explicit Tab(QTableView* pTableView, QObject* parentForMgr);
-    explicit Tab(QTabWidget* pTabWidget, QWidget* pNewWidget);
+    explicit Tab(QTableView* pTableView, QWidget* parentForMgr);
+    explicit Tab(QTabWidget* pTabWidget);
 
     explicit Tab()           = delete;
     explicit Tab(const Tab&) = delete;
@@ -24,13 +23,16 @@ public:
 
 
 public:
-    auto GetTableViewMgr() -> TableViewManager*;
+    auto GetWidget       () const noexcept -> QWidget*;
+    auto GetTableViewMgr () const noexcept -> TableViewManager*;
 
 
 protected:
 
 
 private:
+    QWidget*          m_pWidget_;
+
     TableViewManager* m_pTableViewMgr_;
 };
 

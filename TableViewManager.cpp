@@ -59,6 +59,7 @@ void TableViewManager::NavigateToFolder(const QModelIndex& firstColumnIdx)
     }
 }
 
+
 void TableViewManager::Setup_()
 {
     GetFileSysModel()->setRootPath(GetRootPath());

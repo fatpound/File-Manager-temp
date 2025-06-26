@@ -95,7 +95,7 @@ void TabWidgetManager::InitAddButton_()
 
 void TabWidgetManager::AddTab_()
 {
-    m_tabs_.emplace_back(GetTabWidget(), new QWidget);
+    m_tabs_.emplace_back(GetTabWidget());
 
     connect(
         GetCurrentTab_().GetTableViewMgr(),
@@ -117,13 +117,8 @@ void TabWidgetManager::RemoveTab_(const int& index)
         return;
     }
 
-    m_tabs_.erase(m_tabs_.begin() + index);
-
-    const auto* const pTab = GetTabWidget()->widget(index);
-
     GetTabWidget()->removeTab(index);
-
-    delete pTab;
+    m_tabs_.erase(m_tabs_.begin() + index);
 }
 
 void TabWidgetManager::OnFilePathReceived(const QString& path)

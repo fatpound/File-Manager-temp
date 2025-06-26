@@ -1,24 +1,24 @@
 #include "Tab.hpp"
 
-#include <QWidget>
 #include <QVBoxLayout>
 #include <QtLogging>
 
-Tab::Tab(QTableView* const pTableView, QObject* const parentForMgr)
+Tab::Tab(QTableView* const pTableView, QWidget* const parentWidget)
     :
-    m_pTableViewMgr_(new TableViewManager(pTableView, parentForMgr))
+    m_pWidget_(parentWidget),
+    m_pTableViewMgr_(new TableViewManager(pTableView, m_pWidget_))
 {
 
 }
 
-Tab::Tab(QTabWidget* const pTabWidget, QWidget* const pNewWidget)
+Tab::Tab(QTabWidget* const pTabWidget)
     :
-    Tab(new QTableView, pNewWidget)
+    Tab(new QTableView, new QWidget)
 {
-    (new QVBoxLayout(pNewWidget))->addWidget(GetTableViewMgr()->GetTableView());
+    (new QVBoxLayout(GetWidget()))->addWidget(GetTableViewMgr()->GetTableView());
 
     pTabWidget->setCurrentIndex(
-        pTabWidget->addTab(pNewWidget, "New Tab")
+        pTabWidget->addTab(GetWidget(), "New Tab")
     );
 }
 
@@ -28,7 +28,12 @@ Tab::~Tab()
 }
 
 
-auto Tab::GetTableViewMgr() -> TableViewManager*
+auto Tab::GetWidget() const noexcept -> QWidget*
+{
+    return m_pWidget_;
+}
+
+auto Tab::GetTableViewMgr() const noexcept -> TableViewManager*
 {
     return m_pTableViewMgr_;
 }
