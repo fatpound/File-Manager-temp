@@ -105,20 +105,8 @@ void TableViewManager::Setup_()
         this,
         &TableViewManager::OnDoubleClicked_
     );
-
-    connect(
-        GetTableView(),
-        &QTableView::clicked,
-        this,
-        &TableViewManager::OnTableClicked_
-    );
 }
 
-
-void TableViewManager::OnTableClicked_(const QModelIndex&)
-{
-    emit SelectedPathIsReady(GetCurrentPath());
-}
 
 void TableViewManager::OnDoubleClicked_(const QModelIndex& midx)
 {
