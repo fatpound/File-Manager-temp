@@ -110,12 +110,12 @@ void TableViewManager::Setup_()
         GetTableView(),
         &QTableView::clicked,
         this,
-        &TableViewManager::OnTableActivated_
+        &TableViewManager::OnTableClicked_
     );
 }
 
 
-void TableViewManager::OnTableActivated_(const QModelIndex&)
+void TableViewManager::OnTableClicked_(const QModelIndex&)
 {
     emit SelectedPathIsReady(GetCurrentPath());
 }

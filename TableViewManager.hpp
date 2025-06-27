@@ -56,8 +56,8 @@ private:
 
 
 private slots:
-    void OnTableActivated_ (const QModelIndex& midx);
-    void OnDoubleClicked_  (const QModelIndex& midx);
+    void OnTableClicked_  (const QModelIndex& midx);
+    void OnDoubleClicked_ (const QModelIndex& midx);
 };
 
 #endif // TABLEVIEWMANAGER_H
