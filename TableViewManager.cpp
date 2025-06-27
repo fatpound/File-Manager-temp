@@ -26,6 +26,20 @@ auto TableViewManager::GetRootPath() const -> QString
     return m_root_path_;
 }
 
+auto TableViewManager::GetCurrentPath() const -> QString
+{
+    const auto& current_path = GetFileSysModel()->filePath(GetTableView()->rootIndex());
+
+    if (current_path.length() > 0)
+    {
+        return current_path;
+    }
+    else
+    {
+        return "\\\\";
+    }
+}
+
 auto TableViewManager::GetTableView() const noexcept -> QTableView*
 {
     return m_pTableView_;
@@ -51,7 +65,7 @@ void TableViewManager::NavigateToFolder(const QModelIndex& firstColumnIdx)
     {
         GetTableView()->setRootIndex(firstColumnIdx);
 
-        SelectedPathIsReady(GetFileSysModel()->filePath(firstColumnIdx));
+        emit SelectedPathIsReady(GetFileSysModel()->filePath(firstColumnIdx));
     }
     else
     {
@@ -60,8 +74,21 @@ void TableViewManager::NavigateToFolder(const QModelIndex& firstColumnIdx)
 }
 
 
+auto TableViewManager::eventFilter(QObject* const obj, QEvent* const event) -> bool
+{
+    if ((obj == GetTableView()->viewport()) and (event->type() == QEvent::MouseButtonPress))
+    {
+        emit SelectedPathIsReady(GetCurrentPath());
+    }
+
+    return QObject::eventFilter(obj, event);
+}
+
+
 void TableViewManager::Setup_()
 {
+    GetTableView()->viewport()->installEventFilter(this);
+
     GetFileSysModel()->setRootPath(GetRootPath());
 
     GetTableView()->setModel(GetFileSysModel());
@@ -76,11 +103,24 @@ void TableViewManager::Setup_()
         GetTableView(),
         &QTableView::doubleClicked,
         this,
-        &TableViewManager::ProcessDoubleClick_
+        &TableViewManager::OnDoubleClicked_
+    );
+
+    connect(
+        GetTableView(),
+        &QTableView::clicked,
+        this,
+        &TableViewManager::OnTableActivated_
     );
 }
 
-void TableViewManager::ProcessDoubleClick_(const QModelIndex& midx)
+
+void TableViewManager::OnTableActivated_(const QModelIndex&)
+{
+    emit SelectedPathIsReady(GetCurrentPath());
+}
+
+void TableViewManager::OnDoubleClicked_(const QModelIndex& midx)
 {
     NavigateToFolder(midx.siblingAtColumn(0));
 }

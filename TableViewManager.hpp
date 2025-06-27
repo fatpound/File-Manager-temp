@@ -2,6 +2,7 @@
 #define TABLEVIEWMANAGER_H
 
 #include <QObject>
+#include <QEvent>
 #include <QTableView>
 #include <QFileSystemModel>
 #include <QModelIndex>
@@ -26,6 +27,7 @@ public:
 
 public:
     [[nodiscard]] auto GetRootPath     () const          -> QString;
+    [[nodiscard]] auto GetCurrentPath  () const          -> QString;
     [[nodiscard]] auto GetTableView    () const noexcept -> QTableView*;
     [[nodiscard]] auto GetFileSysModel () const noexcept -> QFileSystemModel*;
 
@@ -39,11 +41,11 @@ signals:
 
 
 protected:
+    virtual auto eventFilter(QObject* obj, QEvent* event) -> bool override;
 
 
 private:
     void Setup_();
-    void ProcessDoubleClick_(const QModelIndex& midx);
 
 
 private:
@@ -51,6 +53,11 @@ private:
 
     QTableView*       m_pTableView_;
     QFileSystemModel* m_pFileSysModel_;
+
+
+private slots:
+    void OnTableActivated_ (const QModelIndex& midx);
+    void OnDoubleClicked_  (const QModelIndex& midx);
 };
 
 #endif // TABLEVIEWMANAGER_H

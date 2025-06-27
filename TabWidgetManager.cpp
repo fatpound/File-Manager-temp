@@ -9,15 +9,13 @@
 
 #include <utility>
 
-TabWidgetManager::TabWidgetManager(QTabWidget* const tabWidget, QTableView* const firstTable, QObject* const parent)
+TabWidgetManager::TabWidgetManager(QTabWidget* const tabWidget, QTableView* const firstTable, QLabel* lineEditLabel, QObject* const parent)
     :
     QObject{parent},
-    m_pTabWidget_(tabWidget)
+    m_pTabWidget_(tabWidget),
+    m_pLabel_(lineEditLabel)
 {
-    m_tabs_.reserve(10U);
-    m_tabs_.emplace_back(firstTable, GetTabWidget()->currentWidget());
-
-    Setup_();
+    Setup_(firstTable);
 }
 
 TabWidgetManager::~TabWidgetManager()
@@ -47,29 +45,39 @@ auto TabWidgetManager::GetCurrentTab_() -> Tab&
     return m_tabs_[GetCurrentTabIndex()];
 }
 
-void TabWidgetManager::Setup_()
+void TabWidgetManager::Setup_(QTableView* const firstTable)
 {
+    m_tabs_.reserve(10U);
+
     InitAddButton_();
+    InitFirstTab_(firstTable);
+
+    connect(
+        GetTabWidget(),
+        &QTabWidget::currentChanged,
+        this,
+        &TabWidgetManager::OnTabChange_
+    );
+
+    connect(
+        GetTabWidget(),
+        &QTabWidget::tabBarClicked,
+        this,
+        &TabWidgetManager::OnTabClicked_
+    );
 
     connect(
         GetTabWidget(),
         &QTabWidget::tabCloseRequested,
         this,
-        &TabWidgetManager::RemoveTab_
+        &TabWidgetManager::OnTabRemove_
     );
 
     connect(
         GetTabWidget()->tabBar(),
         &QTabBar::tabMoved,
         this,
-        &TabWidgetManager::SwapTabs_
-    );
-
-    connect(
-        GetCurrentTab_().GetTableViewMgr(),
-        &TableViewManager::SelectedPathIsReady,
-        this,
-        &TabWidgetManager::OnFilePathReceived
+        &TabWidgetManager::OnTabSwap_
     );
 }
 
@@ -86,39 +94,87 @@ void TabWidgetManager::InitAddButton_()
         plusButton,
         &QToolButton::clicked,
         this,
-        &TabWidgetManager::AddTab_
+        &TabWidgetManager::OnPlusTabAdd_
     );
 }
 
-void TabWidgetManager::AddTab_()
+void TabWidgetManager::InitFilePathConnection_()
 {
-    m_tabs_.emplace_back(GetTabWidget());
-
     connect(
         GetCurrentTab_().GetTableViewMgr(),
         &TableViewManager::SelectedPathIsReady,
         this,
-        &TabWidgetManager::OnFilePathReceived
+        &TabWidgetManager::OnFilePathReceived_
     );
 }
 
-void TabWidgetManager::SwapTabs_(const int& from, const int& to)
+void TabWidgetManager::InitFirstTab_(QTableView* const firstTable)
 {
-    std::swap<>(m_tabs_[from], m_tabs_[to]);
+    if (firstTable == nullptr)
+    {
+        return;
+    }
+
+    m_tabs_.emplace_back(firstTable, GetTabWidget()->currentWidget());
+
+    InitFilePathConnection_();
 }
 
-void TabWidgetManager::RemoveTab_(const int& index)
+void TabWidgetManager::SetLabelText_(const QString& text)
+{
+    m_pLabel_->setText(text);
+}
+
+void TabWidgetManager::SetLabelTextToCurrentPath_()
+{
+    SetLabelText_(GetCurrentTab_().GetTableViewMgr()->GetCurrentPath());
+}
+
+
+void TabWidgetManager::OnPlusTabAdd_()
+{
+    m_tabs_.emplace_back(GetTabWidget());
+
+    InitFilePathConnection_();
+}
+
+void TabWidgetManager::OnTabClicked_(const int&)
+{
+    SetLabelTextToCurrentPath_();
+}
+
+void TabWidgetManager::OnTabChange_(const int&)
+{
+    if (not m_ignore_tab_change_signal_)
+    {
+        SetLabelTextToCurrentPath_();
+    }
+}
+
+void TabWidgetManager::OnTabRemove_(const int& index)
 {
     if (GetTabCount() == 1)
     {
         return;
     }
 
+    m_ignore_tab_change_signal_ = true;
     GetTabWidget()->removeTab(index);
+    m_ignore_tab_change_signal_ = false;
+
     m_tabs_.erase(m_tabs_.begin() + index);
+
+    SetLabelTextToCurrentPath_();
 }
 
-void TabWidgetManager::OnFilePathReceived(const QString& path)
+void TabWidgetManager::OnTabSwap_(const int& from, const int& to)
 {
+    std::swap<>(m_tabs_[from], m_tabs_[to]);
+}
+
+void TabWidgetManager::OnFilePathReceived_(const QString& path)
+{
+    SetLabelText_(path);
+
     GetTabWidget()->setTabIcon(GetCurrentTabIndex(), QFileIconProvider{}.icon(QFileInfo(path)));
 }
