@@ -57,6 +57,13 @@ if (CMAKE_CXX_COMPILER_ID MATCHES "GNU")
         >
     )
 
+    target_link_libraries(CompileOptions INTERFACE
+        ##################################
+
+        ## Standard library
+        $<$<STREQUAL:${CMAKE_HOST_SYSTEM_NAME},Windows>: -lstdc++exp>
+    )
+
 elseif (CMAKE_CXX_COMPILER_ID MATCHES "Clang")
     target_compile_options (CompileOptions INTERFACE
         ##################################
