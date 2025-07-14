@@ -9,6 +9,8 @@
 
 #include <utility>
 
+FM_BEGIN_NAMESPACE
+
 TabWidgetManager::TabWidgetManager(QTabWidget* const tabWidget, QTableView* const firstTable, QLabel* lineEditLabel, QObject* const parent)
     :
     QObject{parent},
@@ -195,3 +197,5 @@ void TabWidgetManager::OnFilePathReceived_(const QString& path)
         GetTabWidget()->setTabIcon(GetCurrentTabIndex(), QFileIconProvider{}.icon(QFileInfo(path)));
     }
 }
+
+FM_END_NAMESPACE

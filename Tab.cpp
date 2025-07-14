@@ -3,6 +3,8 @@
 #include <QVBoxLayout>
 #include <QtLogging>
 
+FM_BEGIN_NAMESPACE
+
 Tab::Tab(QTableView* const pTableView, QWidget* const parentWidget)
     :
     m_pWidget_(parentWidget),
@@ -37,3 +39,5 @@ auto Tab::GetTableViewMgr() const noexcept -> TableViewManager*
 {
     return m_pTableViewMgr_;
 }
+
+FM_END_NAMESPACE

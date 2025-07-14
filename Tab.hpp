@@ -1,11 +1,14 @@
 #ifndef TAB_HPP
 #define TAB_HPP
 
+#include "_macros.hpp"
 #include "TableViewManager.hpp"
 
 #include <QWidget>
 #include <QTableView>
 #include <QTabWidget>
+
+FM_BEGIN_NAMESPACE
 
 class Tab
 {
@@ -34,5 +37,7 @@ private:
     QWidget*            m_pWidget_;
     TableViewManager*   m_pTableViewMgr_;
 };
+
+FM_END_NAMESPACE
 
 #endif // TAB_HPP

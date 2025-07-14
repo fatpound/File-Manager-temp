@@ -24,6 +24,8 @@ qt_add_executable(File-Manager
 
     .clang-format
     .clang-tidy
+
+    _macros.hpp
 )
 
 include(CompileOptions.cmake)

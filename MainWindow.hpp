@@ -1,6 +1,7 @@
 #ifndef MAINWINDOW_HPP
 #define MAINWINDOW_HPP
 
+#include "_macros.hpp"
 #include "TabWidgetManager.hpp"
 
 #include <QMainWindow>
@@ -10,6 +11,8 @@
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
+
+FM_BEGIN_NAMESPACE
 
 class MainWindow : public QMainWindow
 {
@@ -48,5 +51,7 @@ private:
 private slots:
     void on_action_eXit_triggered();
 };
+
+FM_END_NAMESPACE
 
 #endif // MAINWINDOW_HPP

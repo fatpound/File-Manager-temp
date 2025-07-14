@@ -6,6 +6,8 @@
 #include <QUrl>
 #include <QtLogging>
 
+FM_BEGIN_NAMESPACE
+
 TableViewManager::TableViewManager(QTableView* const tableView, QObject* const parent)
     :
     QObject{parent},
@@ -115,3 +117,5 @@ void TableViewManager::OnDoubleClicked_(const QModelIndex& midx)
 {
     NavigateToFolder(midx.siblingAtColumn(0));
 }
+
+FM_END_NAMESPACE

@@ -1,6 +1,7 @@
 #ifndef TABWIDGETMANAGER_H
 #define TABWIDGETMANAGER_H
 
+#include "_macros.hpp"
 #include "Tab.hpp"
 
 #include <QObject>
@@ -10,6 +11,8 @@
 #include <QLabel>
 
 #include <vector>
+
+FM_BEGIN_NAMESPACE
 
 class TabWidgetManager : public QObject
 {
@@ -71,5 +74,7 @@ private slots:
     void OnTabSwap_(const int& from, const int& to);
     void OnFilePathReceived_(const QString& path);
 };
+
+FM_END_NAMESPACE
 
 #endif // TABWIDGETMANAGER_H

@@ -7,7 +7,7 @@ int main(int argc, char *argv[])
 {
     const QApplication app(argc, argv);
 
-    const MainWindow wnd{"File-Manager © fatpound 2025"};
+    const file_manager::MainWindow wnd{"File-Manager © fatpound 2025"};
 
     return app.exec();
 }

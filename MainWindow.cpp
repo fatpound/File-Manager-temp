@@ -1,6 +1,8 @@
 #include "MainWindow.hpp"
 #include "ui_mainwindow.h"
 
+FM_BEGIN_NAMESPACE
+
 MainWindow::UIManager::UIManager(Ui::MainWindow* theUi, QMainWindow* const pWnd)
 {
     theUi->setupUi(pWnd);
@@ -30,3 +32,5 @@ void MainWindow::on_action_eXit_triggered()
 {
     close();
 }
+
+FM_END_NAMESPACE

@@ -1,6 +1,8 @@
 #ifndef TABLEVIEWMANAGER_H
 #define TABLEVIEWMANAGER_H
 
+#include "_macros.hpp"
+
 #include <QObject>
 #include <QEvent>
 #include <QTableView>
@@ -8,6 +10,8 @@
 #include <QModelIndex>
 #include <QString>
 #include <QDir>
+
+FM_BEGIN_NAMESPACE
 
 class TableViewManager : public QObject
 {
@@ -58,5 +62,7 @@ private:
 private slots:
     void OnDoubleClicked_(const QModelIndex& midx);
 };
+
+FM_END_NAMESPACE
 
 #endif // TABLEVIEWMANAGER_H
