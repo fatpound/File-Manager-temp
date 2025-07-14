@@ -49,10 +49,10 @@ private:
 
 
 private:
-    QString           m_root_path_;
+    QString             m_root_path_;
 
-    QTableView*       m_pTableView_;
-    QFileSystemModel* m_pFileSysModel_;
+    QTableView*         m_pTableView_;
+    QFileSystemModel*   m_pFileSysModel_;
 
 
 private slots:

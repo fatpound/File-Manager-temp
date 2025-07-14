@@ -133,7 +133,21 @@ void TabWidgetManager::SetLabelTextToCurrentPath_()
 
 void TabWidgetManager::OnPlusTabAdd_()
 {
+    const auto& is_tab_vector_full = m_tabs_.size() == m_tabs_.capacity();
+
+    if (is_tab_vector_full)
+    {
+        m_ignore_tab_change_signal_ = true;
+    }
+
     m_tabs_.emplace_back(GetTabWidget());
+
+    if (is_tab_vector_full)
+    {
+        m_ignore_tab_change_signal_ = false;
+
+        SetLabelTextToCurrentPath_();
+    }
 
     InitFilePathConnection_();
 }
@@ -176,5 +190,8 @@ void TabWidgetManager::OnFilePathReceived_(const QString& path)
 {
     SetLabelText_(path);
 
-    GetTabWidget()->setTabIcon(GetCurrentTabIndex(), QFileIconProvider{}.icon(QFileInfo(path)));
+    if (path not_eq "\\\\")
+    {
+        GetTabWidget()->setTabIcon(GetCurrentTabIndex(), QFileIconProvider{}.icon(QFileInfo(path)));
+    }
 }

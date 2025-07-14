@@ -38,12 +38,11 @@ private:
 
 
 private:
-    Ui::MainWindow*  ui;
+    Ui::MainWindow*    ui;
+    UIManager          m_UIMgr_;
 
-    UIManager        m_UIMgr_;
-
-    TabWidgetManager m_pTabWidgetMgr_;
-    TabWidgetManager m_pTabWidgetMgr2_;
+    TabWidgetManager   m_tab_widget_mgr_left_;
+    TabWidgetManager   m_tab_widget_mgr_right_;
 
 
 private slots:

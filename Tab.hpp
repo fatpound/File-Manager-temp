@@ -31,9 +31,8 @@ protected:
 
 
 private:
-    QWidget*          m_pWidget_;
-
-    TableViewManager* m_pTableViewMgr_;
+    QWidget*            m_pWidget_;
+    TableViewManager*   m_pTableViewMgr_;
 };
 
 #endif // TAB_HPP

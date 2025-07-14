@@ -51,15 +51,16 @@ private:
 
 
 private:
-    QTabWidget*      m_pTabWidget_;
-    QLabel*          m_pLabel_;
+    QTabWidget*        m_pTabWidget_;
+    QLabel*            m_pLabel_;
 
-    std::vector<Tab> m_tabs_;
+    std::vector<Tab>   m_tabs_;
 
     // This flag is used only in the OnTabChanged_ slot to suppress unnecessary current changed signal because
     // QTabWidget::removeTab emits the currentChanged(int) signal BEFORE the tab is fully removed
     // which can cause the label text to be set using the path from the TableView of the tab that's about to be removed
-    bool             m_ignore_tab_change_signal_{};
+    // QTabBar::setCurrentIndex also emits that signal, making it hard to add new tabs when tab vector is full, causing access violation
+    bool               m_ignore_tab_change_signal_{};
 
 
 private slots:

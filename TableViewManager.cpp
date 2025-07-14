@@ -1,5 +1,6 @@
 #include "TableViewManager.hpp"
 
+#include <QAbstractItemView>
 #include <QHeaderView>
 #include <QDesktopServices>
 #include <QUrl>
@@ -97,7 +98,9 @@ void TableViewManager::Setup_()
     GetTableView()->setSortingEnabled(true);
     GetTableView()->sortByColumn(0, Qt::SortOrder::AscendingOrder);
     GetTableView()->verticalHeader()->setVisible(false);
+    GetTableView()->verticalHeader()->setDefaultSectionSize(20);
     GetTableView()->horizontalHeader()->setStretchLastSection(true);
+    GetTableView()->setSelectionBehavior(QAbstractItemView::SelectionBehavior::SelectRows);
 
     connect(
         GetTableView(),
