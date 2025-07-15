@@ -171,6 +171,8 @@ void TabWidgetManager::OnTabRemove_(const int& index)
 {
     if (GetTabCount() == 1)
     {
+        GetCurrentTab_().GetTableViewMgr()->SetRootPath("");
+
         return;
     }
 

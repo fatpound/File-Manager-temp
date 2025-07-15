@@ -53,13 +53,19 @@ auto TableViewManager::GetFileSysModel() const noexcept -> QFileSystemModel*
     return m_pFileSysModel_;
 }
 
-void TableViewManager::SetRootPath(const QDir& path)
-{
-    m_root_path_ = path.path();
-}
 void TableViewManager::SetRootPath(const QString& path)
 {
     m_root_path_ = path;
+
+    GetTableView()->setRootIndex(
+        GetFileSysModel()->setRootPath(m_root_path_)
+    );
+
+    emit SelectedPathIsReady(GetCurrentPath());
+}
+void TableViewManager::SetRootPath(const QDir& path)
+{
+    SetRootPath(path.path());
 }
 
 void TableViewManager::NavigateToFolder(const QModelIndex& firstColumnIdx)

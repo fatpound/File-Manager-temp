@@ -35,8 +35,8 @@ public:
     [[nodiscard]] auto GetTableView    () const noexcept -> QTableView*;
     [[nodiscard]] auto GetFileSysModel () const noexcept -> QFileSystemModel*;
 
-    void SetRootPath      (const QDir&    path);
     void SetRootPath      (const QString& path);
+    void SetRootPath      (const QDir&    path);
     void NavigateToFolder (const QModelIndex& firstColumnIdx);
 
 
