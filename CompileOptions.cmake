@@ -5,6 +5,8 @@
 ##        My Default Compiler Options        ##
 ##*******************************************##
 
+if (NOT TARGET CompileOptions)
+
 add_library (CompileOptions INTERFACE)
 add_library (FatCxx::CompileOptions ALIAS CompileOptions)
 
@@ -188,6 +190,7 @@ elseif (CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
         /wd4061 # Not all enum identifiers of an Enum (class) are handled by a switch statement (When there is a default case)
         /wd4062 # Not all enum identifiers of an Enum (class) are handled by a switch statement (When there is NOT a default case)
         /wd4324 # structure was padded due to alignment specifier
+        /wd4464 # relative include path contains '..'
         /wd4514 # Unreferenced inline function has been removed
         /wd4820 # n bytes padding added after construct MyClass
         /wd5045 # Compiler will insert Spectre mitigation for memory load if /Qspectre switch specified
@@ -243,3 +246,5 @@ elseif (CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
     )
 
 endif ()
+
+endif()
