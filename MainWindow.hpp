@@ -27,7 +27,7 @@ public:
 
     auto operator = (const MainWindow&)     -> MainWindow& = delete;
     auto operator = (MainWindow&&) noexcept -> MainWindow& = delete;
-    ~MainWindow() override;
+    virtual ~MainWindow() override;
 
 
 protected:

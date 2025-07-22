@@ -26,7 +26,7 @@ public:
 
     auto operator = (const TableViewManager&)     -> TableViewManager& = delete;
     auto operator = (TableViewManager&&) noexcept -> TableViewManager& = delete;
-    ~TableViewManager() override;
+    virtual ~TableViewManager() override;
 
 
 public:

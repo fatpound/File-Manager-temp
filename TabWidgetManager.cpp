@@ -11,7 +11,7 @@
 
 FM_BEGIN_NAMESPACE
 
-TabWidgetManager::TabWidgetManager(QTabWidget* const tabWidget, QTableView* const firstTable, QLabel* lineEditLabel, QObject* const parent)
+TabWidgetManager::TabWidgetManager(QTabWidget* const tabWidget, QTableView* const firstTable, QLabel* const lineEditLabel, QObject* const parent)
     :
     QObject{parent},
     m_pTabWidget_(tabWidget),

@@ -27,7 +27,7 @@ public:
 
     auto operator = (const TabWidgetManager&)     -> TabWidgetManager& = delete;
     auto operator = (TabWidgetManager&&) noexcept -> TabWidgetManager& = delete;
-    ~TabWidgetManager() override;
+    virtual ~TabWidgetManager() override;
 
 
 public:
